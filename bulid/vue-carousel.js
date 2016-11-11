@@ -72,19 +72,19 @@ return /******/ (function(modules) { // webpackBootstrap
 	if (typeof __vue_options__ === "function") {
 	  __vue_options__ = __vue_options__.options
 	}
-	__vue_options__.__file = "/Users/falstack/Documents/Code/vue-carousel/src/vue-carousel.vue"
-	__vue_options__._scopeId = "data-v-5317db82"
+	__vue_options__.__file = "/Users/yuistack/Documents/Code/vue-carousel/src/vue-carousel.vue"
+	__vue_options__._scopeId = "data-v-3cb236fb"
 	
 	/* hot reload */
 	if (false) {(function () {
-	  var hotAPI = require("vue-loader/node_modules/vue-hot-reload-api")
+	  var hotAPI = require("vue-hot-reload-api")
 	  hotAPI.install(require("vue"), false)
 	  if (!hotAPI.compatible) return
 	  module.hot.accept()
 	  if (!module.hot.data) {
-	    hotAPI.createRecord("data-v-5317db82", __vue_options__)
+	    hotAPI.createRecord("data-v-3cb236fb", __vue_options__)
 	  } else {
-	    hotAPI.reload("data-v-5317db82", __vue_options__)
+	    hotAPI.reload("data-v-3cb236fb", __vue_options__)
 	  }
 	})()}
 	if (__vue_options__.functional) {console.error("[vue-loader] vue-carousel.vue: functional components are not supported and should be defined in plain js files using render functions.")}
@@ -108,8 +108,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	if(false) {
 		// When the styles change, update the <style> tags
 		if(!content.locals) {
-			module.hot.accept("!!./../node_modules/.0.25.0@css-loader/index.js!./../node_modules/.9.7.0@vue-loader/lib/style-rewriter.js?id=data-v-5317db82&scoped=true!./../node_modules/.4.0.2@sass-loader/index.js!./../node_modules/.9.7.0@vue-loader/lib/selector.js?type=styles&index=0!./vue-carousel.vue", function() {
-				var newContent = require("!!./../node_modules/.0.25.0@css-loader/index.js!./../node_modules/.9.7.0@vue-loader/lib/style-rewriter.js?id=data-v-5317db82&scoped=true!./../node_modules/.4.0.2@sass-loader/index.js!./../node_modules/.9.7.0@vue-loader/lib/selector.js?type=styles&index=0!./vue-carousel.vue");
+			module.hot.accept("!!./../node_modules/css-loader/index.js!./../node_modules/vue-loader/lib/style-rewriter.js?id=data-v-3cb236fb&scoped=true!./../node_modules/sass-loader/index.js!./../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./vue-carousel.vue", function() {
+				var newContent = require("!!./../node_modules/css-loader/index.js!./../node_modules/vue-loader/lib/style-rewriter.js?id=data-v-3cb236fb&scoped=true!./../node_modules/sass-loader/index.js!./../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./vue-carousel.vue");
 				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
 				update(newContent);
 			});
@@ -127,7 +127,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	
 	// module
-	exports.push([module.id, "\n#vue-carousel[data-v-5317db82] {\n  width: 100%;\n  height: 100%;\n  position: relative;\n  overflow: hidden;\n}\n#vue-carousel .carousel-warp[data-v-5317db82] {\n    position: absolute;\n    left: 0;\n    top: 0;\n}\n#vue-carousel .carousel-item[data-v-5317db82] {\n    position: relative;\n    background-repeat: no-repeat;\n    background-size: cover;\n    background-position: center;\n}\n#vue-carousel .carousel-prev-btn[data-v-5317db82] {\n    left: 0;\n}\n#vue-carousel .carousel-next-btn[data-v-5317db82] {\n    right: 0;\n}\n#vue-carousel .carousel-prev-btn[data-v-5317db82], #vue-carousel .carousel-next-btn[data-v-5317db82], #vue-carousel .carousel-control[data-v-5317db82] {\n    position: absolute;\n}\n#vue-carousel .carousel-hover-show[data-v-5317db82] {\n    opacity: 0;\n    visibility: hidden;\n}\n#vue-carousel:hover .carousel-hover-show[data-v-5317db82] {\n    opacity: 1;\n    visibility: visible;\n}\n", ""]);
+	exports.push([module.id, "\n#vue-carousel[data-v-3cb236fb] {\n  width: 100%;\n  height: 100%;\n  position: relative;\n  overflow: hidden;\n}\n#vue-carousel .carousel-prev-btn[data-v-3cb236fb] {\n    left: 0;\n}\n#vue-carousel .carousel-next-btn[data-v-3cb236fb] {\n    right: 0;\n}\n#vue-carousel .carousel-prev-btn[data-v-3cb236fb], #vue-carousel .carousel-next-btn[data-v-3cb236fb], #vue-carousel .carousel-control[data-v-3cb236fb] {\n    position: absolute;\n}\n#vue-carousel .carousel-hover-show[data-v-3cb236fb] {\n    opacity: 0;\n    visibility: hidden;\n}\n#vue-carousel:hover .carousel-hover-show[data-v-3cb236fb] {\n    opacity: 1;\n    visibility: visible;\n}\n", ""]);
 	
 	// exports
 
@@ -451,8 +451,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	});
 	exports.default = {
 	    template: '\
-	        <div id="vue-carousel" @mouseover="stop" @mouseout="auto">\
-	            <div class="carousel-warp" :style="warpStyle" ref="box">\
+	        <div id="vue-carousel" :style="outerStyle" @mouseover="stop" @mouseout="auto">\
+	            <div :style="warpStyle" ref="warp">\
 	                <item></item>\
 	            </div>\
 	            <button class="carousel-prev-btn" @click="prev" v-if="status.showPrevNext">«</button>\
@@ -472,12 +472,23 @@ return /******/ (function(modules) { // webpackBootstrap
 	        }
 	    },
 	    computed: {
+	        outerStyle: function outerStyle() {
+	            return {
+	                width: this.status.overHidden || this.status.vertical ? '100%' : this.data.length * 100 + '%',
+	                height: !this.status.overHidden && this.status.vertical ? this.data.length * 100 + '%' : '100%',
+	                position: 'relative',
+	                overflow: this.status.overHidden ? 'hidden' : 'visible'
+	            };
+	        },
 	        warpStyle: function warpStyle() {
 	            return {
-	                height: this.status.vertical ? this.data.length * 100 + '%' : '100%',
-	                width: this.status.vertical ? '100%' : this.data.length * 100 + '%',
+	                height: this.status.vertical && this.status.overHidden ? this.data.length * 100 + '%' : '100%',
+	                width: this.status.vertical || !this.status.overHidden ? '100%' : this.data.length * 100 + '%',
 	                transition: this.status.fade + "s",
-	                cursor: this.data[0].link === undefined ? "default" : "pointer"
+	                cursor: this.data[0].link === undefined ? 'default' : 'pointer',
+	                position: 'absolute',
+	                left: 0,
+	                top: 0
 	            };
 	        }
 	    },
@@ -494,7 +505,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	                hoverStop: true,
 	                showPrevNext: true,
 	                showBtnList: true,
-	                loop: true
+	                loop: true,
+	                overHidden: true
 	            },
 	            item: null,
 	            tool: null,
@@ -539,6 +551,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	                this.status.autoPlay = obj.autoPlay;
 	            }
 	
+	            if (typeof obj.overHidden === 'boolean') {
+	                this.status.overHidden = obj.overHidden;
+	            }
+	
 	            if (typeof obj.vertical === 'boolean') {
 	                this.status.vertical = obj.vertical;
 	            }
@@ -559,11 +575,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	                this.status.showBtnList = obj.showBtnList;
 	            }
 	
-	            this.$options.template = this.$options.template.split('<item>').shift() + "<div class='carousel-item' @click='open(item)' :style='itemStyle(item)' v-for='item in data'>" + (this.item === null ? '' : this.item) + "</div>" + this.$options.template.split('</item>').pop();
+	            this.$options.template = this.$options.template.split('<item>').shift() + "<div @click='open(item)' :style='itemStyle(item)' v-for='item in data'>" + (this.item === null ? '' : this.item) + "</div>" + this.$options.template.split('</item>').pop();
 	
-	            if (this.tool !== null) {
-	                this.$options.template = this.$options.template.split('<tool>').shift() + this.tool + this.$options.template.split('</tool>').pop();
-	            }
+	            this.$options.template = this.$options.template.split('<tool>').shift() + (this.tool === null ? '' : this.tool) + this.$options.template.split('</tool>').pop();
 	
 	            this.auto();
 	        },
@@ -619,7 +633,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        },
 	        scroll: function scroll(arg) {
 	            this.status.move = true;
-	            this.status.vertical ? this.$refs.box.style.top = arg * -100 + "%" : this.$refs.box.style.left = arg * -100 + "%";
+	            this.status.vertical ? this.$refs.warp.style.top = arg * -(this.status.overHidden ? 100 : 100 / this.data.length) + "%" : this.$refs.warp.style.left = arg * -(this.status.overHidden ? 100 : 100 / this.data.length) + "%";
 	            var self = this;
 	            setTimeout(function () {
 	                self.status.move = false;
@@ -635,7 +649,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	                float: this.status.vertical ? "none" : "left",
 	                height: this.status.vertical ? 100 / this.data.length + "%" : "100%",
 	                width: this.status.vertical ? "100%" : 100 / this.data.length + "%",
-	                backgroundImage: "url(" + item.img + ")"
+	                background: "url(" + item.img + ")" + " center center / cover no-repeat",
+	                position: "relative"
 	            };
 	        }
 	    }

@@ -5,19 +5,6 @@
         position: relative;
         overflow: hidden;
 
-        .carousel-warp {
-            position: absolute;
-            left: 0;
-            top: 0;
-        }
-
-        .carousel-item {
-            position: relative;
-            background-repeat: no-repeat;
-            background-size: cover;
-            background-position: center;
-        }
-
         .carousel-prev-btn {
             left: 0;
         }
@@ -46,8 +33,8 @@
 
     export default {
         template : '\
-            <div id="vue-carousel" @mouseover="stop" @mouseout="auto">\
-                <div class="carousel-warp" :style="warpStyle" ref="box">\
+            <div id="vue-carousel" :style="outerStyle" @mouseover="stop" @mouseout="auto">\
+                <div :style="warpStyle" ref="warp">\
                     <item></item>\
                 </div>\
                 <button class="carousel-prev-btn" @click="prev" v-if="status.showPrevNext">«</button>\
@@ -67,12 +54,23 @@
             }
         },
         computed: {
+            outerStyle () {
+                return {
+                    width : this.status.overHidden || this.status.vertical ? '100%' : this.data.length * 100 + '%',
+                    height : !this.status.overHidden && this.status.vertical ? this.data.length * 100 + '%' : '100%',
+                    position: 'relative',
+                    overflow: this.status.overHidden ? 'hidden' : 'visible'
+                }
+            },
             warpStyle () {
                 return {
-                    height: this.status.vertical ? this.data.length * 100 + '%' : '100%',
-                    width: this.status.vertical ? '100%' : this.data.length * 100 + '%',
+                    height: this.status.vertical && this.status.overHidden ? this.data.length * 100 + '%' : '100%',
+                    width: this.status.vertical || !this.status.overHidden ? '100%' : this.data.length * 100 + '%',
                     transition : this.status.fade + "s",
-                    cursor: this.data[0].link === undefined ? "default" : "pointer"
+                    cursor: this.data[0].link === undefined ? 'default' : 'pointer',
+                    position: 'absolute',
+                    left : 0,
+                    top : 0
                 }
             }
         },
@@ -89,7 +87,8 @@
                     hoverStop : true,
                     showPrevNext : true,
                     showBtnList : true,
-                    loop : true
+                    loop : true,
+                    overHidden : true
                 },
                 item : null,
                 tool : null,
@@ -133,6 +132,10 @@
                     this.status.autoPlay = obj.autoPlay
                 }
 
+                if (typeof obj.overHidden === 'boolean') {
+                    this.status.overHidden = obj.overHidden
+                }
+
                 if (typeof obj.vertical === 'boolean') {
                     this.status.vertical = obj.vertical
                 }
@@ -153,11 +156,9 @@
                     this.status.showBtnList = obj.showBtnList
                 }
 
-                this.$options.template = this.$options.template.split('<item>').shift() + "<div class='carousel-item' @click='open(item)' :style='itemStyle(item)' v-for='item in data'>" + (this.item === null ? '' : this.item) + "</div>" + this.$options.template.split('</item>').pop();
+                this.$options.template = this.$options.template.split('<item>').shift() + "<div @click='open(item)' :style='itemStyle(item)' v-for='item in data'>" + (this.item === null ? '' : this.item) + "</div>" + this.$options.template.split('</item>').pop();
 
-                if (this.tool !== null) {
-                    this.$options.template = this.$options.template.split('<tool>').shift() + this.tool + this.$options.template.split('</tool>').pop();
-                }
+                this.$options.template = this.$options.template.split('<tool>').shift() + (this.tool === null ? '' : this.tool) + this.$options.template.split('</tool>').pop();
 
                 this.auto()
             },
@@ -209,7 +210,7 @@
             },
             scroll (arg) {
                 this.status.move = true;
-                this.status.vertical ? this.$refs.box.style.top = arg * -100 + "%" : this.$refs.box.style.left = arg * -100 + "%";
+                this.status.vertical ? this.$refs.warp.style.top = arg * -(this.status.overHidden ? 100 : 100 / this.data.length) + "%" : this.$refs.warp.style.left = arg * -(this.status.overHidden ? 100 : 100 / this.data.length) + "%";
                 let self = this;
                 setTimeout(function () {
                     self.status.move = false
@@ -225,7 +226,8 @@
                     float: this.status.vertical ? "none" : "left",
                     height: this.status.vertical ? 100 / this.data.length + "%" : "100%",
                     width: this.status.vertical ? "100%" : 100 / this.data.length + "%",
-                    backgroundImage: "url(" + item.img + ")"
+                    background: "url(" + item.img + ")" + " center center / cover no-repeat",
+                    position : "relative"
                 }
             }
         }
