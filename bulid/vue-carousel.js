@@ -127,7 +127,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	
 	// module
-	exports.push([module.id, "\n#vue-carousel[data-v-5317db82] {\n  width: 100%;\n  height: 100%;\n  position: relative;\n  overflow: hidden;\n}\n#vue-carousel .carousel-warp[data-v-5317db82] {\n    position: absolute;\n    left: 0;\n    top: 0;\n}\n#vue-carousel .carousel-item[data-v-5317db82] {\n    position: relative;\n    background-repeat: no-repeat;\n    background-size: cover;\n    background-position: center;\n    float: left;\n    cursor: pointer;\n}\n#vue-carousel .carousel-prev-btn[data-v-5317db82], #vue-carousel .carousel-next-btn[data-v-5317db82], #vue-carousel .carousel-control[data-v-5317db82] {\n    position: absolute;\n}\n#vue-carousel .carousel-hover-show[data-v-5317db82] {\n    opacity: 0;\n    visibility: hidden;\n}\n#vue-carousel:hover .carousel-hover-show[data-v-5317db82] {\n    opacity: 1;\n    visibility: visible;\n}\n", ""]);
+	exports.push([module.id, "\n#vue-carousel[data-v-5317db82] {\n  width: 100%;\n  height: 100%;\n  position: relative;\n  overflow: hidden;\n}\n#vue-carousel .carousel-warp[data-v-5317db82] {\n    position: absolute;\n    left: 0;\n    top: 0;\n}\n#vue-carousel .carousel-item[data-v-5317db82] {\n    position: relative;\n    background-repeat: no-repeat;\n    background-size: cover;\n    background-position: center;\n}\n#vue-carousel .carousel-prev-btn[data-v-5317db82] {\n    left: 0;\n}\n#vue-carousel .carousel-next-btn[data-v-5317db82] {\n    right: 0;\n}\n#vue-carousel .carousel-prev-btn[data-v-5317db82], #vue-carousel .carousel-next-btn[data-v-5317db82], #vue-carousel .carousel-control[data-v-5317db82] {\n    position: absolute;\n}\n#vue-carousel .carousel-hover-show[data-v-5317db82] {\n    opacity: 0;\n    visibility: hidden;\n}\n#vue-carousel:hover .carousel-hover-show[data-v-5317db82] {\n    opacity: 1;\n    visibility: visible;\n}\n", ""]);
 	
 	// exports
 
@@ -474,9 +474,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	    computed: {
 	        warpStyle: function warpStyle() {
 	            return {
-	                height: '100%',
-	                width: this.data.length * 100 + '%',
-	                transition: this.status.fade + "s"
+	                height: this.status.vertical ? this.data.length * 100 + '%' : '100%',
+	                width: this.status.vertical ? '100%' : this.data.length * 100 + '%',
+	                transition: this.status.fade + "s",
+	                cursor: this.data[0].link === undefined ? "default" : "pointer"
 	            };
 	        }
 	    },
@@ -484,7 +485,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        return {
 	            status: {
 	                move: false,
-	                orz: true,
+	                vertical: false,
 	                fade: 1,
 	                timeOut: 1,
 	                now: 1,
@@ -492,7 +493,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	                autoPlay: true,
 	                hoverStop: true,
 	                showPrevNext: true,
-	                showBtnList: true
+	                showBtnList: true,
+	                loop: true
 	            },
 	            item: null,
 	            tool: null,
@@ -517,35 +519,43 @@ return /******/ (function(modules) { // webpackBootstrap
 	                return;
 	            }
 	
-	            if (obj.item !== undefined) {
+	            if (typeof obj.item === 'string') {
 	                this.item = obj.item;
 	            }
 	
-	            if (obj.tool !== undefined) {
+	            if (typeof obj.tool === 'string') {
 	                this.tool = obj.tool;
 	            }
 	
-	            if (obj.timeOut !== undefined && typeof obj.timeOut === 'number' && obj.timeOut >= 0) {
+	            if (typeof obj.timeOut === 'number' && obj.timeOut >= 0) {
 	                this.status.timeOut = obj.timeOut;
 	            }
 	
-	            if (obj.fade !== undefined && typeof obj.fade === 'number' && obj.fade >= 0) {
+	            if (typeof obj.fade === 'number' && obj.fade >= 0) {
 	                this.status.fade = obj.fade;
 	            }
 	
-	            if (obj.autoPlay !== undefined && typeof obj.autoPlay === 'boolean') {
+	            if (typeof obj.autoPlay === 'boolean') {
 	                this.status.autoPlay = obj.autoPlay;
 	            }
 	
-	            if (obj.hoverStop !== undefined && typeof obj.hoverStop === 'boolean') {
+	            if (typeof obj.vertical === 'boolean') {
+	                this.status.vertical = obj.vertical;
+	            }
+	
+	            if (typeof obj.loop === 'boolean') {
+	                this.status.loop = obj.loop;
+	            }
+	
+	            if (typeof obj.hoverStop === 'boolean') {
 	                this.status.hoverStop = obj.hoverStop;
 	            }
 	
-	            if (obj.showPrevNext !== undefined && typeof obj.showPrevNext === 'boolean') {
+	            if (typeof obj.showPrevNext === 'boolean') {
 	                this.status.showPrevNext = obj.showPrevNext;
 	            }
 	
-	            if (obj.showBtnList !== undefined && typeof obj.showBtnList === 'boolean') {
+	            if (typeof obj.showBtnList === 'boolean') {
 	                this.status.showBtnList = obj.showBtnList;
 	            }
 	
@@ -578,19 +588,26 @@ return /******/ (function(modules) { // webpackBootstrap
 	        prev: function prev() {
 	            if (!this.status.move) {
 	                if (this.status.now === 1) {
-	                    this.status.now = this.data.length;
+	                    if (this.status.loop) {
+	                        this.status.now = this.data.length;
+	                        this.scroll(this.status.now - 1);
+	                    }
 	                } else {
 	                    this.status.now--;
+	                    this.scroll(this.status.now - 1);
 	                }
-	                this.scroll(this.status.now - 1);
 	            }
 	        },
 	        next: function next() {
 	            if (!this.status.move) {
 	                if (this.status.now === this.data.length) {
-	                    this.status.now = 0;
+	                    if (this.status.loop) {
+	                        this.status.now = 0;
+	                        this.scroll(this.status.now++);
+	                    }
+	                } else {
+	                    this.scroll(this.status.now++);
 	                }
-	                this.scroll(this.status.now++);
 	            }
 	        },
 	        jump: function jump(arg) {
@@ -602,24 +619,26 @@ return /******/ (function(modules) { // webpackBootstrap
 	        },
 	        scroll: function scroll(arg) {
 	            this.status.move = true;
-	            this.$refs.box.style.left = arg * -100 + "%";
+	            this.status.vertical ? this.$refs.box.style.top = arg * -100 + "%" : this.$refs.box.style.left = arg * -100 + "%";
 	            var self = this;
 	            setTimeout(function () {
 	                self.status.move = false;
 	            }, this.status.fade * 1000);
 	        },
 	        open: function open(item) {
-	            window.open(item.link);
+	            if (item.link !== undefined) {
+	                window.open(item.link);
+	            }
 	        },
 	        itemStyle: function itemStyle(item) {
 	            return {
-	                height: "100%",
-	                width: 100 / this.data.length + "%",
+	                float: this.status.vertical ? "none" : "left",
+	                height: this.status.vertical ? 100 / this.data.length + "%" : "100%",
+	                width: this.status.vertical ? "100%" : 100 / this.data.length + "%",
 	                backgroundImage: "url(" + item.img + ")"
 	            };
 	        }
-	    },
-	    mounted: function mounted() {}
+	    }
 	};
 
 /***/ }

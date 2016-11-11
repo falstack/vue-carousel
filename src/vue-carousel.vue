@@ -16,8 +16,14 @@
             background-repeat: no-repeat;
             background-size: cover;
             background-position: center;
-            float: left;
-            cursor: pointer;
+        }
+
+        .carousel-prev-btn {
+            left: 0;
+        }
+
+        .carousel-next-btn {
+            right: 0;
         }
 
         .carousel-prev-btn, .carousel-next-btn, .carousel-control {
@@ -63,9 +69,10 @@
         computed: {
             warpStyle () {
                 return {
-                    height: '100%',
-                    width: this.data.length * 100 + '%',
-                    transition : this.status.fade + "s"
+                    height: this.status.vertical ? this.data.length * 100 + '%' : '100%',
+                    width: this.status.vertical ? '100%' : this.data.length * 100 + '%',
+                    transition : this.status.fade + "s",
+                    cursor: this.data[0].link === undefined ? "default" : "pointer"
                 }
             }
         },
@@ -73,7 +80,7 @@
             return {
                 status : {
                     move : false,
-                    orz : true,
+                    vertical : false,
                     fade : 1,
                     timeOut : 1,
                     now : 1,
@@ -81,7 +88,8 @@
                     autoPlay : true,
                     hoverStop : true,
                     showPrevNext : true,
-                    showBtnList : true
+                    showBtnList : true,
+                    loop : true
                 },
                 item : null,
                 tool : null,
@@ -105,35 +113,43 @@
                     return
                 }
 
-                if (obj.item !== undefined) {
+                if (typeof obj.item === 'string') {
                     this.item = obj.item
                 }
 
-                if (obj.tool !== undefined) {
+                if (typeof obj.tool=== 'string') {
                     this.tool = obj.tool
                 }
 
-                if (obj.timeOut !== undefined && typeof obj.timeOut === 'number' && obj.timeOut >= 0) {
+                if (typeof obj.timeOut === 'number' && obj.timeOut >= 0) {
                     this.status.timeOut = obj.timeOut
                 }
 
-                if (obj.fade !== undefined && typeof obj.fade === 'number' && obj.fade >= 0) {
+                if (typeof obj.fade === 'number' && obj.fade >= 0) {
                     this.status.fade = obj.fade
                 }
 
-                if (obj.autoPlay !== undefined && typeof obj.autoPlay === 'boolean') {
+                if (typeof obj.autoPlay === 'boolean') {
                     this.status.autoPlay = obj.autoPlay
                 }
 
-                if (obj.hoverStop !== undefined && typeof obj.hoverStop === 'boolean') {
+                if (typeof obj.vertical === 'boolean') {
+                    this.status.vertical = obj.vertical
+                }
+
+                if (typeof obj.loop === 'boolean') {
+                    this.status.loop = obj.loop
+                }
+
+                if (typeof obj.hoverStop === 'boolean') {
                     this.status.hoverStop = obj.hoverStop
                 }
 
-                if (obj.showPrevNext !== undefined && typeof obj.showPrevNext === 'boolean') {
+                if (typeof obj.showPrevNext === 'boolean') {
                     this.status.showPrevNext = obj.showPrevNext
                 }
 
-                if (obj.showBtnList !== undefined && typeof obj.showBtnList === 'boolean') {
+                if (typeof obj.showBtnList === 'boolean') {
                     this.status.showBtnList = obj.showBtnList
                 }
 
@@ -162,19 +178,26 @@
             prev () {
                 if (!this.status.move) {
                     if (this.status.now === 1) {
-                        this.status.now = this.data.length
+                        if (this.status.loop) {
+                            this.status.now = this.data.length;
+                            this.scroll(this.status.now - 1)
+                        }
                     } else {
-                        this.status.now--
+                        this.status.now--;
+                        this.scroll(this.status.now - 1)
                     }
-                    this.scroll(this.status.now - 1)
                 }
             },
             next () {
                 if (!this.status.move) {
                     if (this.status.now === this.data.length) {
-                        this.status.now = 0
+                        if (this.status.loop) {
+                            this.status.now = 0;
+                            this.scroll(this.status.now ++)
+                        }
+                    } else {
+                        this.scroll(this.status.now ++)
                     }
-                    this.scroll(this.status.now ++)
                 }
             },
             jump (arg) {
@@ -186,25 +209,25 @@
             },
             scroll (arg) {
                 this.status.move = true;
-                this.$refs.box.style.left = arg * -100 + "%";
+                this.status.vertical ? this.$refs.box.style.top = arg * -100 + "%" : this.$refs.box.style.left = arg * -100 + "%";
                 let self = this;
                 setTimeout(function () {
                     self.status.move = false
                 }, this.status.fade * 1000)
             },
             open (item) {
-                window.open(item.link);
+                if (item.link !== undefined) {
+                    window.open(item.link)
+                }
             },
             itemStyle (item) {
                 return {
-                    height: "100%",
-                    width : 100 / this.data.length + "%",
-                    backgroundImage : "url(" + item.img + ")"
+                    float: this.status.vertical ? "none" : "left",
+                    height: this.status.vertical ? 100 / this.data.length + "%" : "100%",
+                    width: this.status.vertical ? "100%" : 100 / this.data.length + "%",
+                    backgroundImage: "url(" + item.img + ")"
                 }
             }
-        },
-        mounted () {
-
         }
     }
 </script>
