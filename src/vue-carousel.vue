@@ -89,7 +89,8 @@
                     showBtnList : true,
                     loop : true,
                     overHidden : true,
-                    keyCode : false
+                    keyCode : false,
+                    mouse : false
                 },
                 item : null,
                 tool : null,
@@ -147,6 +148,10 @@
 
                 if (typeof obj.keyCode === 'boolean') {
                     this.status.keyCode = obj.keyCode
+                }
+
+                if (typeof obj.mouse === 'boolean') {
+                    this.status.mouse = obj.mouse
                 }
 
                 if (typeof obj.hoverStop === 'boolean') {
@@ -234,6 +239,17 @@
                     background: "url(" + item.img + ")" + " center center / cover no-repeat",
                     position : "relative"
                 }
+            },
+            mousewheel (e) {
+                if (this.status.mouse) {
+                    let delta = e.wheelDelta || -e.detail;
+                    if (delta > 0) {
+                        this.prev()
+                    } else if (delta < 0) {
+                        this.next()
+                    }
+                    e.preventDefault()
+                }
             }
         },
         mounted () {
@@ -253,7 +269,15 @@
                     }
                 }
             });
+
             // 滚轮事件
+            document.addEventListener('mousewheel', function (e) {
+                self.mousewheel(e);
+            });
+
+            document.addEventListener('DOMMouseScroll', function (e) {
+                self.mousewheel(e);
+            });
         }
     }
 </script>
