@@ -134,8 +134,8 @@
             return {
                 init: {
                     tool : '\
-                        <a class="more carousel-hover-show" :href="data[status.now -1].link" target="_blank">更多 ></a>\
-                        <div class="text" :href="data[status.now -1].link" target="_blank">\
+                        <a class="more carousel-hover-show" :href="thisPic.link" target="_blank">更多 ></a>\
+                        <div class="text" :href="thisPic.link" target="_blank">\
                             <a :href="item.link" v-for="(item, index) in data" :class="[ index + 1 === status.now ? \'show\' : \'\' ]" target="_blank">{{ item.text }}</a>\
                         </div>\
                     ',

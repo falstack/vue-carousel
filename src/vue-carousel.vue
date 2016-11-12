@@ -250,6 +250,9 @@
                     }
                     e.preventDefault()
                 }
+            },
+            thisPic () {
+                return this.data[this.status.now -1]
             }
         },
         mounted () {

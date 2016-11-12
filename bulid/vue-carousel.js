@@ -673,6 +673,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	                }
 	                e.preventDefault();
 	            }
+	        },
+	        thisPic: function thisPic() {
+	            return this.data[this.status.now - 1];
 	        }
 	    },
 	    mounted: function mounted() {
