@@ -88,7 +88,8 @@
                     showPrevNext : true,
                     showBtnList : true,
                     loop : true,
-                    overHidden : true
+                    overHidden : true,
+                    keyCode : false
                 },
                 item : null,
                 tool : null,
@@ -142,6 +143,10 @@
 
                 if (typeof obj.loop === 'boolean') {
                     this.status.loop = obj.loop
+                }
+
+                if (typeof obj.keyCode === 'boolean') {
+                    this.status.keyCode = obj.keyCode
                 }
 
                 if (typeof obj.hoverStop === 'boolean') {
@@ -230,6 +235,25 @@
                     position : "relative"
                 }
             }
+        },
+        mounted () {
+            // keyCode事件
+            // 40：下，38：上，39：右，37：左，32：空格
+            let self = this;
+            document.addEventListener("keydown", function(e) {
+                if (self.status.keyCode) {
+                    let code = e.keyCode;
+                    if (code === 40 || code === 39) {
+                        e.preventDefault();
+                        self.next()
+                    }
+                    else if (code === 38 || code == 37) {
+                        e.preventDefault();
+                        self.prev();
+                    }
+                }
+            });
+            // 滚轮事件
         }
     }
 </script>
