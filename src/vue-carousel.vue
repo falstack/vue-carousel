@@ -13,7 +13,7 @@
             right: 0;
         }
 
-        .carousel-prev-btn, .carousel-next-btn, .carousel-control {
+        .carousel-prev-btn, .carousel-next-btn, .carousel-btn-menu {
             position: absolute;
         }
 
@@ -39,10 +39,8 @@
                 </div>\
                 <button class="carousel-prev-btn" @click="prev" v-if="status.showPrevNext">«</button>\
                 <button class="carousel-next-btn" @click="next" v-if="status.showPrevNext">»</button>\
-                <div class="carousel-control">\
-                    <span class="carousel-btn-menu" v-if="status.showBtnList">\
-                        <em :class="[ \'carousel-btn\', item === status.now ? \'carousel-btn-now\' : \'\' ]" v-for="item in data.length" @click="jump(item)"></em>\
-                    </span>\
+                <div class="carousel-btn-menu" v-if="status.showBtnList">\
+                    <span :class="[ \'carousel-btn\', item === status.now ? \'carousel-btn-now\' : \'\' ]" v-for="item in data.length" @click="jump(item)"></span>\
                 </div>\
                 <tool></tool>\
             </div>\
@@ -86,7 +84,7 @@
                     autoPlay : true,
                     hoverStop : true,
                     showPrevNext : true,
-                    showBtnList : true,
+                    showBtnList : false,
                     loop : true,
                     overHidden : true,
                     keyCode : false,
@@ -166,7 +164,7 @@
                     this.status.showBtnList = obj.showBtnList
                 }
 
-                this.$options.template = this.$options.template.split('<item>').shift() + "<div @click='open(item)' :style='itemStyle(item)' v-for='item in data'>" + (this.item === null ? '' : this.item) + "</div>" + this.$options.template.split('</item>').pop();
+                this.$options.template = this.$options.template.split('<item>').shift() + "<div @click='open(item)' class='carousel-item' :style='itemStyle(item)' v-for='item in data'>" + (this.item === null ? '' : this.item) + "</div>" + this.$options.template.split('</item>').pop();
 
                 this.$options.template = this.$options.template.split('<tool>').shift() + (this.tool === null ? '' : this.tool) + this.$options.template.split('</tool>').pop();
 
@@ -232,11 +230,12 @@
                 }
             },
             itemStyle (item) {
+                let reg = new RegExp(/\//);
                 return {
                     float: this.status.vertical ? "none" : "left",
                     height: this.status.vertical ? 100 / this.data.length + "%" : "100%",
                     width: this.status.vertical ? "100%" : 100 / this.data.length + "%",
-                    background: "url(" + item.img + ")" + " center center / cover no-repeat",
+                    background: reg.test(item.img) ? "url(" + item.img + ")" + " center center / cover no-repeat" : item.img,
                     position : "relative"
                 }
             },
@@ -252,7 +251,7 @@
                 }
             },
             thisPic () {
-                return this.data[this.status.now -1]
+                return this.data[this.status.now - 1]
             }
         },
         mounted () {

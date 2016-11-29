@@ -14,12 +14,12 @@
     </style>
 </head>
 <body>
-    <div id="warp">
-        <carousel :init="init"></carousel>
-    </div>
+<div id="warp">
+    <carousel :init="init"></carousel>
+</div>
 </body>
 <script src="http://cdn.bootcss.com/vue/2.0.3/vue.min.js"></script>
-<script src="./bulid/vue-carousel.js"></script>
+<script src="../bulid/vue-carousel.js"></script>
 <script>
     new Vue({
         el: '#warp',
@@ -45,11 +45,9 @@
                     ],
                     hoverStop : false,
                     showPrevNext : false,
-//                    loop : false,
+                    vertical : true,
                     overHidden : false,
-                    autoPlay : false,
-//                    keyCode : true,
-//                    mouse : true
+                    autoPlay : false
                 }
             }
         }

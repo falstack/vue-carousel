@@ -127,7 +127,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	
 	// module
-	exports.push([module.id, "\n#vue-carousel[data-v-3cb236fb] {\n  width: 100%;\n  height: 100%;\n  position: relative;\n  overflow: hidden;\n}\n#vue-carousel .carousel-prev-btn[data-v-3cb236fb] {\n    left: 0;\n}\n#vue-carousel .carousel-next-btn[data-v-3cb236fb] {\n    right: 0;\n}\n#vue-carousel .carousel-prev-btn[data-v-3cb236fb], #vue-carousel .carousel-next-btn[data-v-3cb236fb], #vue-carousel .carousel-control[data-v-3cb236fb] {\n    position: absolute;\n}\n#vue-carousel .carousel-hover-show[data-v-3cb236fb] {\n    opacity: 0;\n    visibility: hidden;\n}\n#vue-carousel:hover .carousel-hover-show[data-v-3cb236fb] {\n    opacity: 1;\n    visibility: visible;\n}\n", ""]);
+	exports.push([module.id, "\n#vue-carousel[data-v-3cb236fb] {\n  width: 100%;\n  height: 100%;\n  position: relative;\n  overflow: hidden;\n}\n#vue-carousel .carousel-prev-btn[data-v-3cb236fb] {\n    left: 0;\n}\n#vue-carousel .carousel-next-btn[data-v-3cb236fb] {\n    right: 0;\n}\n#vue-carousel .carousel-prev-btn[data-v-3cb236fb], #vue-carousel .carousel-next-btn[data-v-3cb236fb], #vue-carousel .carousel-btn-menu[data-v-3cb236fb] {\n    position: absolute;\n}\n#vue-carousel .carousel-hover-show[data-v-3cb236fb] {\n    opacity: 0;\n    visibility: hidden;\n}\n#vue-carousel:hover .carousel-hover-show[data-v-3cb236fb] {\n    opacity: 1;\n    visibility: visible;\n}\n", ""]);
 	
 	// exports
 
@@ -457,10 +457,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	            </div>\
 	            <button class="carousel-prev-btn" @click="prev" v-if="status.showPrevNext">«</button>\
 	            <button class="carousel-next-btn" @click="next" v-if="status.showPrevNext">»</button>\
-	            <div class="carousel-control">\
-	                <span class="carousel-btn-menu" v-if="status.showBtnList">\
-	                    <em :class="[ \'carousel-btn\', item === status.now ? \'carousel-btn-now\' : \'\' ]" v-for="item in data.length" @click="jump(item)"></em>\
-	                </span>\
+	            <div class="carousel-btn-menu" v-if="status.showBtnList">\
+	                <span :class="[ \'carousel-btn\', item === status.now ? \'carousel-btn-now\' : \'\' ]" v-for="item in data.length" @click="jump(item)"></span>\
 	            </div>\
 	            <tool></tool>\
 	        </div>\
@@ -504,7 +502,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                autoPlay: true,
 	                hoverStop: true,
 	                showPrevNext: true,
-	                showBtnList: true,
+	                showBtnList: false,
 	                loop: true,
 	                overHidden: true,
 	                keyCode: false,
@@ -585,7 +583,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                this.status.showBtnList = obj.showBtnList;
 	            }
 	
-	            this.$options.template = this.$options.template.split('<item>').shift() + "<div @click='open(item)' :style='itemStyle(item)' v-for='item in data'>" + (this.item === null ? '' : this.item) + "</div>" + this.$options.template.split('</item>').pop();
+	            this.$options.template = this.$options.template.split('<item>').shift() + "<div @click='open(item)' class='carousel-item' :style='itemStyle(item)' v-for='item in data'>" + (this.item === null ? '' : this.item) + "</div>" + this.$options.template.split('</item>').pop();
 	
 	            this.$options.template = this.$options.template.split('<tool>').shift() + (this.tool === null ? '' : this.tool) + this.$options.template.split('</tool>').pop();
 	
@@ -655,11 +653,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	            }
 	        },
 	        itemStyle: function itemStyle(item) {
+	            var reg = new RegExp(/\//);
 	            return {
 	                float: this.status.vertical ? "none" : "left",
 	                height: this.status.vertical ? 100 / this.data.length + "%" : "100%",
 	                width: this.status.vertical ? "100%" : 100 / this.data.length + "%",
-	                background: "url(" + item.img + ")" + " center center / cover no-repeat",
+	                background: reg.test(item.img) ? "url(" + item.img + ")" + " center center / cover no-repeat" : item.img,
 	                position: "relative"
 	            };
 	        },
