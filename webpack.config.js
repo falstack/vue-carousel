@@ -22,7 +22,17 @@ module.exports = {
     vue: {
         loaders: {
             scss: 'style!css!sass',
-            postcss: [ autoprefixer({ browsers: ['last 2 versions'] }) ]
+            postcss: [ autoprefixer({ browsers: [
+                'ie >= 8',
+                'ie_mob >= 10',
+                'ff >= 26',
+                'chrome >= 30',
+                'safari >= 6',
+                'opera >= 23',
+                'ios >= 5',
+                'android >= 2.3',
+                'bb >= 10'
+            ] }) ]
         }
     },
     babel: {

@@ -5,6 +5,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <title>Document</title>
+    <script src="http://cdn.bootcss.com/vue/2.0.3/vue.min.js"></script>
+    <script src="../bulid/vue-carousel.js"></script>
     <style>
         button, a {
             cursor: pointer;
@@ -114,59 +116,59 @@
     <carousel :init="init"></carousel>
 </div>
 </body>
-<script src="http://cdn.bootcss.com/vue/2.0.3/vue.min.js"></script>
-<script src="../bulid/vue-carousel.js"></script>
 <script>
-    new Vue({
-        el: '#warp',
-        components: {
-            carousel : window.vueCarousel
-        },
-        data () {
-            return {
-                init: {
-                    tool : '\
+    window.onload = function () {
+        new Vue({
+            el: '#warp',
+            components: {
+                carousel : window.vueCarousel
+            },
+            data () {
+                return {
+                    init: {
+                        tool : '\
                         <a class="more carousel-hover-show" :href="thisPic.link" target="_blank">更多 ></a>\
                         <div class="text" :href="thisPic.link" target="_blank">\
                             <a :href="item.link" v-for="(item, index) in data" :class="[ index + 1 === status.now ? \'show\' : \'\' ]" target="_blank">{{ item.text }}</a>\
                         </div>\
                     ',
-                    data : [
-                        {
-                            img : "http://i2.hdslb.com/video/f7/f7a0e6ca9c7d8ec558183eaf7b81bc97.jpg",
-                            link : "https://www.baidu.com/",
-                            text : "百度一下，你就知道"
-                        },
-                        {
-                            img : "http://i2.hdslb.com/video/71/71816c046e11441c084b56b6b6401bf4.jpg",
-                            link : "http://cn.bing.com/",
-                            text : "全球搜索，有问必应"
-                        },
-                        {
-                            img : "http://i0.hdslb.com/video/af/afc34d74b53e995d8a1f3eaa7ba818ac.jpg",
-                            link : "https://www.zhihu.com/",
-                            text : "与世界分享你的知识、经验和见解"
-                        },
-                        {
-                            img : "http://t1.niutuku.com/960/45/45-582392.jpg",
-                            link : "http://www.jianshu.com/",
-                            text : "交流故事,沟通想法"
-                        },
-                        {
-                            img : "http://tupian.enterdesk.com/2012/0524/yt/01/120501115551-1.jpg",
-                            link : "http://huaban.com/",
-                            text : "花瓣，陪你做生活的设计师"
-                        }
-                    ],
-                    timeOut : 2.5,
-                    fade : .3,
-                    autoPlay : true,
-                    hoverStop : true,
-                    showPrevNext : false,
-                    showBtnList : true
+                        data : [
+                            {
+                                img : "http://i2.hdslb.com/video/f7/f7a0e6ca9c7d8ec558183eaf7b81bc97.jpg",
+                                link : "https://www.baidu.com/",
+                                text : "百度一下，你就知道"
+                            },
+                            {
+                                img : "http://i2.hdslb.com/video/71/71816c046e11441c084b56b6b6401bf4.jpg",
+                                link : "http://cn.bing.com/",
+                                text : "全球搜索，有问必应"
+                            },
+                            {
+                                img : "http://i0.hdslb.com/video/af/afc34d74b53e995d8a1f3eaa7ba818ac.jpg",
+                                link : "https://www.zhihu.com/",
+                                text : "与世界分享你的知识、经验和见解"
+                            },
+                            {
+                                img : "http://t1.niutuku.com/960/45/45-582392.jpg",
+                                link : "http://www.jianshu.com/",
+                                text : "交流故事,沟通想法"
+                            },
+                            {
+                                img : "http://tupian.enterdesk.com/2012/0524/yt/01/120501115551-1.jpg",
+                                link : "http://huaban.com/",
+                                text : "花瓣，陪你做生活的设计师"
+                            }
+                        ],
+                        timeOut : 2.5,
+                        fade : .3,
+                        autoPlay : true,
+                        hoverStop : true,
+                        showPrevNext : false,
+                        showBtnList : true
+                    }
                 }
             }
-        }
-    });
+        });
+    }
 </script>
 </html>

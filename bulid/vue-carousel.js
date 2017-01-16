@@ -55,6 +55,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ function(module, exports, __webpack_require__) {
 
 	var __vue_exports__, __vue_options__
+	var __vue_styles__ = {}
 	
 	/* styles */
 	__webpack_require__(1)
@@ -72,8 +73,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	if (typeof __vue_options__ === "function") {
 	  __vue_options__ = __vue_options__.options
 	}
-	__vue_options__.__file = "/Users/yuistack/Documents/Code/vue-carousel/src/vue-carousel.vue"
-	__vue_options__._scopeId = "data-v-3cb236fb"
+	__vue_options__.__file = "/Users/falstack/Documents/Code/vue-carousel/src/vue-carousel.vue"
+	__vue_options__._scopeId = "data-v-5317db82"
 	
 	/* hot reload */
 	if (false) {(function () {
@@ -82,9 +83,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	  if (!hotAPI.compatible) return
 	  module.hot.accept()
 	  if (!module.hot.data) {
-	    hotAPI.createRecord("data-v-3cb236fb", __vue_options__)
+	    hotAPI.createRecord("data-v-5317db82", __vue_options__)
 	  } else {
-	    hotAPI.reload("data-v-3cb236fb", __vue_options__)
+	    hotAPI.reload("data-v-5317db82", __vue_options__)
 	  }
 	})()}
 	if (__vue_options__.functional) {console.error("[vue-loader] vue-carousel.vue: functional components are not supported and should be defined in plain js files using render functions.")}
@@ -108,8 +109,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	if(false) {
 		// When the styles change, update the <style> tags
 		if(!content.locals) {
-			module.hot.accept("!!./../node_modules/css-loader/index.js!./../node_modules/vue-loader/lib/style-rewriter.js?id=data-v-3cb236fb&scoped=true!./../node_modules/sass-loader/index.js!./../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./vue-carousel.vue", function() {
-				var newContent = require("!!./../node_modules/css-loader/index.js!./../node_modules/vue-loader/lib/style-rewriter.js?id=data-v-3cb236fb&scoped=true!./../node_modules/sass-loader/index.js!./../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./vue-carousel.vue");
+			module.hot.accept("!!./../node_modules/css-loader/index.js!./../node_modules/vue-loader/lib/style-rewriter.js?id=data-v-5317db82&scoped=true!./../node_modules/sass-loader/index.js!./../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./vue-carousel.vue", function() {
+				var newContent = require("!!./../node_modules/css-loader/index.js!./../node_modules/vue-loader/lib/style-rewriter.js?id=data-v-5317db82&scoped=true!./../node_modules/sass-loader/index.js!./../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./vue-carousel.vue");
 				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
 				update(newContent);
 			});
@@ -127,7 +128,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	
 	// module
-	exports.push([module.id, "\n#vue-carousel[data-v-3cb236fb] {\n  width: 100%;\n  height: 100%;\n  position: relative;\n  overflow: hidden;\n}\n#vue-carousel .carousel-prev-btn[data-v-3cb236fb] {\n    left: 0;\n}\n#vue-carousel .carousel-next-btn[data-v-3cb236fb] {\n    right: 0;\n}\n#vue-carousel .carousel-prev-btn[data-v-3cb236fb], #vue-carousel .carousel-next-btn[data-v-3cb236fb], #vue-carousel .carousel-btn-menu[data-v-3cb236fb] {\n    position: absolute;\n}\n#vue-carousel .carousel-hover-show[data-v-3cb236fb] {\n    opacity: 0;\n    visibility: hidden;\n}\n#vue-carousel:hover .carousel-hover-show[data-v-3cb236fb] {\n    opacity: 1;\n    visibility: visible;\n}\n", ""]);
+	exports.push([module.id, "\n#vue-carousel[data-v-5317db82] {\n  width: 100%;\n  height: 100%;\n  position: relative;\n  overflow: hidden;\n}\n#vue-carousel .carousel-prev-btn[data-v-5317db82] {\n    left: 0;\n}\n#vue-carousel .carousel-next-btn[data-v-5317db82] {\n    right: 0;\n}\n#vue-carousel .carousel-prev-btn[data-v-5317db82], #vue-carousel .carousel-next-btn[data-v-5317db82], #vue-carousel .carousel-btn-menu[data-v-5317db82] {\n    position: absolute;\n}\n#vue-carousel .carousel-hover-show[data-v-5317db82] {\n    opacity: 0;\n    visibility: hidden;\n}\n#vue-carousel:hover .carousel-hover-show[data-v-5317db82] {\n    opacity: 1;\n    visibility: visible;\n}\n", ""]);
 	
 	// exports
 
